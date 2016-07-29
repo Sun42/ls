@@ -1,0 +1,35 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "my.h"
+#include "ls.h"
+
+void	display_list_file(t_flist **begin, int tabopt[5]);
+void    do_on_eq_in_flist(t_flist *begin, void (*f)(), void *data, int (*cmp)());
+int     is_error(void *data_ref, t_file file);
+void    display_error(t_file file);
+t_flist  *rm_all_eq_in_flist(t_flist **begin, void *data_ref, int (*cmp)());
+void	display_normal(t_file file);
+int    is_type(void *data, t_file file);
+
+
+
+int	main(int ac, char **av)
+{
+  int			tabopt[5];
+  t_flist		*params_list;
+  
+  if (ac < 1)
+    exit (-1);
+  params_list  = check_args(ac, av, tabopt);
+  if (tabopt[LITTLE_D] == 1)
+    {
+      display_list_as_file(&params_list, tabopt);
+    }
+  else 
+    {
+      display_list_file(&params_list, tabopt);
+    }
+  return (0);
+}
